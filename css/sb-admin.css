@@ -327,3 +327,18 @@ table.dataTable thead .sorting:after {
 .show-grid {
     margin: 15px 0;
 }
+
+
+.cover {
+    float: left;
+    width: 160px;
+}
+
+.data-movie {
+    margin-left: 165px;
+}
+
+.display-filme {
+    overflow: auto;
+    min-height: 260px;
+}
