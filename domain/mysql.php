@@ -52,6 +52,25 @@ class HelperMySQL {
             $this->closeConnection();
         }        
     }
+    
+    function sql_multi_query($query){
+    	if (!$this->connected)
+        	$this->connect();        
+
+    	$result;
+		// Conecta e faz a query no MySQL
+        if($this->result = multi_query($query)){
+            $this->closeConnection();
+            return $this->result;
+        }else{
+			// Caso ocorra um erro, exibe uma mensagem com o Erro
+            print "Ocorreu um erro ao executar a Query MySQL: <b>$query</b>";
+			print "<br><br>";
+			print "Erro no MySQL: <b>".mysql_error()."</b>";
+			die();
+            $this->closeConnection();
+        }        
+    }
 
 	
     function closeConnection(){
@@ -62,5 +81,58 @@ class HelperMySQL {
     	}
     	
     }
+    
+    public function select($from, $where = '', $orderBy = '', $limit = '', $like = false, $operand = 'AND', $cols = '*') {
+        // Catch Exceptions
+        if (trim($from) == '') {
+            return false;
+        }
+
+        $query = "SELECT {$cols} FROM `{$from}` WHERE ";
+
+        if (is_array($where) && $where != '') {
+            // Prepare Variables
+
+            foreach ($where as $key => $value) {
+                if ($like) {
+                    $query .= "`{$key}` LIKE '%{$value}%' {$operand} ";
+                } else {
+                    $query .= "`{$key}` = '{$value}' {$operand} ";
+                }
+            }
+
+            $query = substr($query, 0, -(strlen($operand) + 2));
+        } else {
+            $query = substr($query, 0, -6);
+        }
+
+        if ($orderBy != '') {
+            $query .= ' ORDER BY ' . $orderBy;
+        }
+
+        if ($limit != '') {
+            $query .= ' LIMIT ' . $limit;
+        }
+
+        
+        return $this->sql_query($query);
+    }
+    
+    public function update($table, $set, $where, $exclude = '') {
+    
+        
+    }
+    
+    public function insert($table, $values)
+    {
+        
+        
+    }
+    
+    public function delele($table, $where)
+    {
+            
+    }
+    
 }
 ?>

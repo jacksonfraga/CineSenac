@@ -1,286 +1,108 @@
 <?php
-	function startsWith($haystack, $needle)
-	{
-		return $needle === "" || strpos($haystack, $needle) === 0;
-	}
 
-	
-class ClientePersistencia {
+include_once('mysql.php');
 
-	
-	private $tipoRegistro;
-	function __construct() {
-	   $this->tipoRegistro = "cliente";
-	}
+/**
+ * Description of clientePersistencia
+ *
+ * @author Jackson
+ */
+class clientePersistencia {
 
-	public function GetAll()
-	{
-		$items = array();
+    private function fetchEntity($record) {
 
-		$arquivo = file('clientes.txt'); // Lê todo o arquivo para um vetor
+        $cliente = new Cliente();
+        $cliente->setId($record->Id);
+        $cliente->setNome($record->Nome);
+        $cliente->setEmail($record->Email);
+        $cliente->setTelefone($record->Telefone);
+        $cliente->setEstado($record->Estado);
+        $cliente->setCidade($record->Cidade);
+        $cliente->setEndereco($record->Endereco);
+        $cliente->setCPF($record->CPF);
+        $cliente->setRG($record->RG);
+        $cliente->setNomePai($record->NomePai);
+        $cliente->setNomeMae($record->NomeMae);
+        $cliente->setFoto($record->Foto);
+        return $cliente;
+    }
 
-		if ($arquivo) {
+    function getAll() {
+        $oMySQL = new HelperMySQL();
+        $return = array();   
+        
+        $records = $oMySQL->select('clientes');
 
-			foreach($arquivo as $k=>$linha)
-			{
+        print_r($records);
+        
+        while($registro = mysql_fetch_object($records)){
+            $return[] = $this->fetchEntity($registro);
+        }
 
+        return $return;
+    }
 
-				$linha = str_replace("\\,", "<<||>>", $linha);
+    function getById($id) {
+        $oMySQL = new HelperMySQL();
+        $return = array();
 
+        $where = array('Id' => $id);
 
-				$registro = str_getcsv($linha);
+        $records = $oMySQL->select('clientes', $where);
 
-				if (strtoupper($registro[0]) != strtoupper($this->tipoRegistro)) {
-					continue;
-				}
+        foreach ($records as $record) {
+            $return[] = fetchEntity($record);
+        }
 
-				// Obtendo o nome
-				$cliente = new Cliente();
+        return $return;
+    }
 
-				$cliente->setId($registro[1]);
-				$cliente->setNome($registro[2]);
-				$cliente->setCidade($registro[3]);
-				$cliente->setRG($registro[4]);
-				$cliente->setPai($registro[5]);
-				$cliente->setEndereco($registro[6]);
-				$cliente->setEstado($registro[7]);
-				$cliente->setEMail($registro[8]);
-				$cliente->setMae($registro[9]);
-				$cliente->setFone($registro[10]);
-				$cliente->setCPF($registro[11]);
-				$cliente->setFoto($registro[12]);
+    function insert($entity) {
+        $oMySQL = new HelperMySQL();
 
-				$items[] = $cliente;
-			}
-		}
+        $data = array('Id' => $entity->getId(),
+            'Nome' => $entity->getNome(),
+            'Email' => $entity->getEmail(),
+            'Telefone' => $entity->getTelefone(),
+            'Estado' => $entity->getEstado(),
+            'Cidade' => $entity->getCidade(),
+            'Endereco' => $entity->getEndereco(),
+            'CPF' => $entity->getCPF(),
+            'RG' => $entity->getRG(),
+            'NomePai' => $entity->getNomePai(),
+            'NomeMae' => $entity->getNomeMae(),
+            'Foto' => $entity->getFoto() );
 
-		return $items;
+        $oMySQL->insert($data, 'clientes');
+    }
 
-	}
+    function update($entity) {
+        $oMySQL = new HelperMySQL();
 
-	public function GetById($id)
-	{
-		$cliente = new Cliente();
+        $set = array(
+            'Nome' => $entity->getNome(),
+            'Email' => $entity->getEmail(),
+            'Telefone' => $entity->getTelefone(),
+            'Estado' => $entity->getEstado(),
+            'Cidade' => $entity->getCidade(),
+            'Endereco' => $entity->getEndereco(),
+            'CPF' => $entity->getCPF(),
+            'RG' => $entity->getRG(),
+            'NomePai' => $entity->getNomePai(),
+            'NomeMae' => $entity->getNomeMae(),
+            'Foto' => $entity->getFoto() );
+        
+        $where = array('Id' => $entity->getId());
 
-		$arquivo = file('clientes.txt'); // Lê todo o arquivo para um vetor
+        $oMySQL->update('clientes', $set, $where);
+    }
 
-		if ($arquivo) {
+    function delete($id) {
+        $oMySQL = new HelperMySQL();
+        $where = array('Id' => $id);
+        $oMySQL->delete('clientes', $where);
+    }
 
-			foreach($arquivo as $k=>$linha)
-			{
-
-				$registro = str_getcsv($linha);
-
-				if (strtoupper($registro[0]) != strtoupper($this->tipoRegistro)) {
-					continue;
-				}
-				
-				
-				if ($registro[1] == $id)
-				{
-					// Obtendo o nome
-					$cliente = new Cliente();
-
-					$cliente->setId($registro[1]);
-					$cliente->setNome($registro[2]);
-					$cliente->setCidade($registro[3]);
-					$cliente->setRG($registro[4]);
-					$cliente->setPai($registro[5]);
-					$cliente->setEndereco($registro[6]);
-					$cliente->setEstado($registro[7]);
-					$cliente->setEMail($registro[8]);
-					$cliente->setMae($registro[9]);
-					$cliente->setFone($registro[10]);
-					$cliente->setCPF($registro[11]);
-					$cliente->setFoto($registro[12]);
-					
-					break;
-				}
-			}
-		}
-
-		return $cliente;
-	}
-
-	function Delete($id)
-	{
-
-		$arquivo = file('clientes.txt'); // Lê todo o arquivo para um vetor
-
-		if ($arquivo) {
-
-			foreach($arquivo as $k=>$linha)
-			{
-				$registro = str_getcsv($linha);
-
-				if (strtoupper($registro[0]) != strtoupper($this->tipoRegistro)) {
-					continue;
-				}
-
-				if ($registro[1] == $id)
-				{
-					unset($arquivo[$k]); // Elininando a linha
-				}
-			}
-
-			file_put_contents('clientes.txt',$arquivo);
-		}
-	}
-	
-	function Post($cliente)
-	{
-		$id = $cliente->getId();
-		$lastID = 0;
-		
-		$valido = true;
-		
-		$messageErro = "";
-		
-
-		if($cliente->getNome() == '')
-		{
-			$valido = false;
-			$messageErro .= "Informe o campo Nome<br />";
-		}
-		if($cliente->getCidade() == '')
-		{
-			$valido = false;
-			$messageErro .= "Informe o campo Cidade<br />";
-		}
-		if($cliente->getRG() == '')
-		{
-			$valido = false;
-			$messageErro .= "Informe o campo RG<br />";
-		}
-		if($cliente->getEndereco() == '')
-		{
-			$valido = false;
-			$messageErro .= "Informe o campo Endereco<br />";
-		}
-		if($cliente->getEstado() == '')
-		{
-			$valido = false;
-			$messageErro .= "Informe o campo Estado<br />";
-		}
-		if($cliente->getEMail() == '')
-		{
-			$valido = false;
-			$messageErro .= "Informe o campo EMail<br />";
-		}
-		if($cliente->getMae() == '')
-		{
-			$valido = false;
-			$messageErro .= "Informe o campo Mae<br />";
-		}
-		if($cliente->getCPF() == '')
-		{
-			$valido = false;
-			$messageErro .= "Informe o campo CPF<br />";
-		}
-		
-		if (!$valido)
-		{
-			throw new Exception($messageErro . "<br />");
-		}
-
-		$arquivo = file('clientes.txt'); // Lê todo o arquivo para um vetor
-
-		if ($arquivo) {
-
-			foreach($arquivo as $k=>$linha)
-			{
-				$registro = str_getcsv($linha);				
-				
-				if (strtoupper($registro[0]) != strtoupper($this->tipoRegistro)) {
-					continue;
-				}
-
-				if ($registro[1] > $lastID)
-					$lastID = $registro[1];
-
-				if ($registro[1] == $id)
-				{
-					unset($registro);
-					
-					$registro[] = $this->tipoRegistro;
-					$registro[] = $cliente->getId();
-					$registro[] = $cliente->getNome();
-					$registro[] = $cliente->getCidade();
-					$registro[] = $cliente->getRG();
-					$registro[] = $cliente->getPai();
-					$registro[] = $cliente->getEndereco();
-					$registro[] = $cliente->getEstado();
-					$registro[] = $cliente->getEMail();
-					$registro[] = $cliente->getMae();
-					$registro[] = $cliente->getFone();
-					$registro[] = $cliente->getCPF();
-					$registro[] = $cliente->getFoto();
-					
-					foreach($registro as $j=>$field)
-					{
-						$registro[$j] = str_replace(",", "\,", $field);
-					}
-
-		
-					
-					$arquivo[$k] = join(",", $registro) . "\n";
-					
-					
-
-					break;
-				}
-
-			}
-
-
-		}
-
-		if (!$id)
-		{
-
-			$id = $lastID+1;
-			$novoRegistro = array($this->tipoRegistro,
-				$id,
-				$cliente->getNome(),
-				$cliente->getCidade(),
-				$cliente->getRG(),
-				$cliente->getPai(),
-				$cliente->getEndereco(),
-				$cliente->getEstado(),
-				$cliente->getEMail(),
-				$cliente->getMae(),
-				$cliente->getFone(),
-				$cliente->getCPF(),
-				$cliente->getFoto()
-			);
-
-
-			foreach($novoRegistro as $j=>$field)
-			{
-				$novoRegistro[$j] = str_replace(",", "\,", $field);
-			}
-			$strNovo = join(",", $novoRegistro);
-			echo $strNovo . "<br><br><br>";
-			
-			if (!startsWith($strNovo, "\n"))
-				$strNovo = "\n" . $strNovo;
-				
-			$arquivo[] = $strNovo;
-
-		}
-
-
-		file_put_contents('clientes.txt', $arquivo);
-
-		return $id;
-	}
 }
-
-// $items = array();
-
-// while($row = mysql_fetch_array($result, MYSQL_BOTH)) {
-    // $items[] = $row;
-// }
-// echo 'Count of Order Items...', count($items);
 
 ?>

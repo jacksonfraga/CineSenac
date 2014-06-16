@@ -2,102 +2,116 @@
 
 class Cliente
 {
-	private $Id, $Nome, $Cidade, $RG, $Pai, $Endereco, $Estado, $EMail, $Mae, $Fone, $CPF, $Foto;
+    private $Id;
+    private $Nome;
+    private $Email;
+    private $Telefone;
+    private $Estado;
+    private $Cidade;
+    private $Endereco;
+    private $CPF;
+    private $RG;
+    private $NomePai;
+    private $NomeMae;
+    private $Foto;
+    
+    public function getId() {
+        return $this->Id;
+    }
 
-	public function getId() {
-		return $this->Id;
-	}
+    public function getNome() {
+        return $this->Nome;
+    }
 
-	public function setId($value) {
-		$this->Id = $value;
-	}
+    public function getEmail() {
+        return $this->Email;
+    }
 
-	public function getNome() {
-		return $this->Nome;
-	}
+    public function getTelefone() {
+        return $this->Telefone;
+    }
 
-	public function setNome($value) {
-		$this->Nome = $value;
-	}
+    public function getEstado() {
+        return $this->Estado;
+    }
 
-	public function getCidade() {
-		return $this->Cidade;
-	}
+    public function getCidade() {
+        return $this->Cidade;
+    }
 
-	public function setCidade($value) {
-		$this->Cidade = $value;
-	}
+    public function getEndereco() {
+        return $this->Endereco;
+    }
 
-	public function getRG (){
-		return $this->RG;
-	}
+    public function getCPF() {
+        return $this->CPF;
+    }
 
-	public function setRG($value) {
-		$this->RG = $value;
-	}
+    public function getRG() {
+        return $this->RG;
+    }
 
-	public function getPai (){
-		return $this->Pai;
-	}
+    public function getNomePai() {
+        return $this->NomePai;
+    }
 
-	public function setPai($value) {
-		$this->Pai = $value;
-	}
+    public function getNomeMae() {
+        return $this->NomeMae;
+    }
 
-	public function getEndereco (){
-		return $this->Endereco;
-	}
+    public function getFoto() {
+        return $this->Foto;
+    }
 
-	public function setEndereco($value) {
-		$this->Endereco = $value;
-	}
+    public function setId($Id) {
+        $this->Id = $Id;
+    }
 
-	public function getEstado (){
-		return $this->Estado;
-	}
+    public function setNome($Nome) {
+        $this->Nome = $Nome;
+    }
 
-	public function setEstado($value) {
-		$this->Estado = $value;
-	}
+    public function setEmail($Email) {
+        $this->Email = $Email;
+    }
 
-	public function getEMail (){
-		return $this->EMail;
-	}
+    public function setTelefone($Telefone) {
+        $this->Telefone = $Telefone;
+    }
 
-	public function setEMail($value) {
-		$this->EMail = $value;
-	}
+    public function setEstado($Estado) {
+        $this->Estado = $Estado;
+    }
 
-	public function getMae (){
-		return $this->Mae;
-	}
+    public function setCidade($Cidade) {
+        $this->Cidade = $Cidade;
+    }
 
-	public function setMae($value) {
-		$this->Mae = $value;
-	}
+    public function setEndereco($Endereco) {
+        $this->Endereco = $Endereco;
+    }
 
-	public function getFone (){
-		return $this->Fone;
-	}
+    public function setCPF($CPF) {
+        $this->CPF = $CPF;
+    }
 
-	public function setFone($value) {
-		$this->Fone = $value;
-	}
+    public function setRG($RG) {
+        $this->RG = $RG;
+    }
 
-	public function getCPF (){
-		return $this->CPF;
-	}
+    public function setNomePai($NomePai) {
+        $this->NomePai = $NomePai;
+    }
 
-	public function setCPF($value) {
-		$this->CPF = $value;
-	}
+    public function setNomeMae($NomeMae) {
+        $this->NomeMae = $NomeMae;
+    }
 
-	public function getFoto (){
-		return $this->Foto;
-	}
+    public function setFoto($Foto) {
+        $this->Foto = $Foto;
+    }
 
-	public function setFoto($value) {
-		$this->Foto = $value;
-	}
+
+
 }
-?>
+

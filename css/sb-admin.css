@@ -342,3 +342,7 @@ table.dataTable thead .sorting:after {
     overflow: auto;
     min-height: 260px;
 }
+
+.column-icon {
+    width: 42px;
+}
