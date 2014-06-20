@@ -29,13 +29,11 @@ class clientePersistencia {
 
     function getAll() {
         $oMySQL = new HelperMySQL();
-        $return = array();   
-        
+        $return = array();
+
         $records = $oMySQL->select('clientes');
 
-        print_r($records);
-        
-        while($registro = mysql_fetch_object($records)){
+        while ($registro = mysql_fetch_object($records)) {
             $return[] = $this->fetchEntity($registro);
         }
 
@@ -44,23 +42,37 @@ class clientePersistencia {
 
     function getById($id) {
         $oMySQL = new HelperMySQL();
-        $return = array();
+        $return = new Cliente;
 
         $where = array('Id' => $id);
 
         $records = $oMySQL->select('clientes', $where);
 
-        foreach ($records as $record) {
-            $return[] = fetchEntity($record);
+        while ($registro = mysql_fetch_object($records)) {
+            $return = $this->fetchEntity($registro);
+            break;
         }
 
         return $return;
     }
 
-    function insert($entity) {
+    function post($entity) {
+        
+        if ($entity->getId() > 0) {
+            print_r($entity);
+            echo 'UPDATE';
+            $this->update($entity);
+        } else {
+            echo 'INSERT';
+            $this->insert($entity);
+        }
+        
+    }
+
+    private function insert($entity) {
         $oMySQL = new HelperMySQL();
 
-        $data = array('Id' => $entity->getId(),
+        $data = array(//'Id' => $entity->getId(),
             'Nome' => $entity->getNome(),
             'Email' => $entity->getEmail(),
             'Telefone' => $entity->getTelefone(),
@@ -71,12 +83,12 @@ class clientePersistencia {
             'RG' => $entity->getRG(),
             'NomePai' => $entity->getNomePai(),
             'NomeMae' => $entity->getNomeMae(),
-            'Foto' => $entity->getFoto() );
+            'Foto' => $entity->getFoto());
 
-        $oMySQL->insert($data, 'clientes');
+        $oMySQL->insert('clientes', $data);
     }
 
-    function update($entity) {
+    private function update($entity) {
         $oMySQL = new HelperMySQL();
 
         $set = array(
@@ -90,9 +102,11 @@ class clientePersistencia {
             'RG' => $entity->getRG(),
             'NomePai' => $entity->getNomePai(),
             'NomeMae' => $entity->getNomeMae(),
-            'Foto' => $entity->getFoto() );
+            'Foto' => $entity->getFoto());
         
+
         $where = array('Id' => $entity->getId());
+                
 
         $oMySQL->update('clientes', $set, $where);
     }
@@ -104,5 +118,3 @@ class clientePersistencia {
     }
 
 }
-
-?>

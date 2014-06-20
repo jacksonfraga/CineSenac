@@ -25,18 +25,18 @@
 			{
 				session_start();
 				$_SESSION["authorization"] = serialize($usuario);
-				// deveria fazer a validação do login
+				// deveria fazer a validaï¿½ï¿½o do login
 				$redirect = "admin.php";	
 				header("location:$redirect");	
 			}
 			else
-				$messageError = "Usuário ou senha inválidos";
+				$messageError = "Usuï¿½rio ou senha invï¿½lidos";
 		}
 		else
 			$messageError = "Informe o campo Senha";
 	}
 	else
-		$messageError = "Informe o campo Usuário";
+		$messageError = "Informe o campo UsuÃ¡rio";
 		
 		if ($_SERVER['REQUEST_METHOD'] == "GET")
 			$messageError = "";

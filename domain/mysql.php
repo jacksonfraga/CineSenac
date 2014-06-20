@@ -118,20 +118,84 @@ class HelperMySQL {
         return $this->sql_query($query);
     }
     
-    public function update($table, $set, $where, $exclude = '') {
-    
+    public function update($table, $set, $where) {
+
+// Catch Exceptions
+        if (trim($table) == '' || !is_array($set) || !is_array($where)) {
+            return false;
+        }
+
+
+        // SET
+        $query = "UPDATE `{$table}` SET ";
+
+        $separador = "";
+        foreach ($set as $key => $value) {
+             $query .= $separador . "`{$key}` = '{$value}' ";
+             $separador = ", ";
+        }
+
+        // WHERE
+
+        $query .= ' WHERE (1=1) ';
+
+        foreach ($where as $key => $value) {
+            $query .= " AND `{$key}` = '{$value}'";
+        }        
+
+        echo $query;
+        return $this->sql_query($query);
         
     }
     
     public function insert($table, $values)
     {
+// Catch Exceptions
+        if (trim($table) == '' || !is_array($values)) {
+            return false;
+        }
+
+
+        // SET
+        $query = "INSERT INTO `{$table}` (";
+
+        $separador = "";
+        foreach ($values as $key => $value) {
+             $query .= $separador . "`{$key}`";
+             $separador = ", ";
+        }
+
+        // WHERE
+
+        $query .= ' ) VALUES (';
         
+        $separador = "";
+        foreach ($values as $key => $value) {
+             $query .= $separador . "'{$value}'";
+             $separador = ", ";
+        }
+
         
+        $query .= ")";
+        
+
+        echo $query;
+        return $this->sql_query($query);
     }
     
-    public function delele($table, $where)
+    public function delete($table, $where)
     {
-            
+        $query = "DELETE FROM `{$table}` WHERE ";
+        if (is_array($where) && $where != '') {            
+
+            foreach ($where as $key => $value) {
+                $query .= "`{$key}` = '{$value}' AND ";
+            }
+
+            $query = substr($query, 0, -5);
+        }
+
+        return $this->sql_query($query);
     }
     
 }
