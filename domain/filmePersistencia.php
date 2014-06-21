@@ -9,8 +9,13 @@ include("mysql.php");
  */
 class FilmePersistencia {
 
-    function fetchEntity($record)
-    {
+    private $tableName;
+
+    function __construct() {
+        $this->tableName = "filmes";
+    }
+
+    function fetchEntity($record) {
         $filme = new Filme();
 
         $filme->setId($record->Id);
@@ -22,67 +27,77 @@ class FilmePersistencia {
         $filme->setTermino($record->Termino);
         $filme->setAtores($record->Atores);
         $filme->setGenero($record->Genero);
-        
+
         return $filme;
-        /*
-         * Exemplo:
-
-            $usuario = new Usuario();
-            $usuario->setId($record->Id);
-            $usuario->setEmail($record->Email);
-            $usuario->setNome($record->Nome);
-            $usuario->setDataCriacao($record->DataCriacao);
-            return $usuario;
-
-         *
-         */
     }
 
+    private function getDataValues($entity) {
+        return array(
+            'Sinopse' => $entity->getSinopse(),
+            'Titulo' => $entity->getTitulo(),
+            'ImageUrl' => $entity->getImageUrl(),
+            'Duracao' => $entity->getDuracao(),
+            'Lancamento' => $entity->getLancamento(),
+            'Termino' => $entity->getTermino(),
+            'Atores' => $entity->getAtores(),
+            'Genero' => $entity->getGenero());
+    }
 
-    function getAll()
-    {
-        $mysql = new HelperMySQL;
-
+    function getAll() {
+        $oMySQL = new HelperMySQL();
         $return = array();
 
-        $mysql->sql_query("SET NAMES 'utf8'");
-        $records = $mysql->sql_query("SELECT * FROM filmes ");
+        $records = $oMySQL->select($this->tableName);
 
-
-        while($row = mysql_fetch_object($records)){
-            $return[] = $this->fetchEntity($row);
+        while ($registro = mysql_fetch_object($records)) {
+            $return[] = $this->fetchEntity($registro);
         }
 
         return $return;
     }
 
-    function getById($id)
-    {
-        $mysql = new HelperMySQL;
+    function getById($id) {
+        $oMySQL = new HelperMySQL();
 
+        $where = array('Id' => $id);
 
-        $records = $mysql->sql_query("SELECT * FROM filmes WHERE Id = $id ");
+        $records = $oMySQL->select($this->tableName, $where);
 
-        while($record = mysql_fetch_object($records)){
-            return $this->fetchEntity($record);
+        while ($registro = mysql_fetch_object($records)) {
+            return $this->fetchEntity($registro);
+        }
+
+        return false;
+    }
+
+    function post($entity) {
+
+        if ($entity->getId() > 0) {
+            print_r($entity);
+            $this->update($entity);
+        } else {
+            $this->insert($entity);
         }
     }
 
-    function insert($entity)
-    {
-
+    private function insert($entity) {
+        $oMySQL = new HelperMySQL();
+        $data = $this->getDataValues($entity);
+        $oMySQL->insert($this->tableName, $data);
     }
 
-    function update($entity)
-    {
+    private function update($entity) {
+        $oMySQL = new HelperMySQL();
 
+        $set = $this->getDataValues($entity);
+        $where = array('Id' => $entity->getId());
+        $oMySQL->update($this->tableName, $set, $where);
     }
 
-    function delete($id)
-    {
-
+    function delete($id) {
+        $oMySQL = new HelperMySQL();
+        $where = array('Id' => $id);
+        $oMySQL->delete($this->tableName, $where);
     }
 
 }
-
-?>

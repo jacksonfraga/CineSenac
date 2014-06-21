@@ -4,6 +4,7 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Filmes</h1>
+            <p><a href="filme.php" class="btn btn-primary">Novo Filme</a></p>
             <div>
                 {if $messageError neq ""}
                     <div class="alert alert-danger alert-dismissable">
@@ -32,10 +33,10 @@
             <div class="col-lg-6">
                 <div class="display-filme">
                     <div class="cover">
-                    <a href="#"><img src="{$filme->getImageUrl()}" alt="Cover do Filme" ></a>
+                    <a href="filme.php?id={$filme->getId()}"><img src="{$filme->getImageUrl()}" alt="Cover do Filme" ></a>
                     </div>
                     <div class="data-movie">
-                        <a href="#">{$filme->getTitulo()}</a>
+                        <a href="filme.php?id={$filme->getId()}">{$filme->getTitulo()}</a>
                         <div>Gênero</div>
                         <div>{$filme->getGenero()}</div>
                         <div>Com</div>

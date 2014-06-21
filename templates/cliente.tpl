@@ -2,21 +2,29 @@
 
 <div id="page-wrapper">    
     <form role="form" action="cliente.php" method="POST">
-        <div class="row">
-            <div>
-                {if $messageError neq ""}
-                    <div class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                        <span>{$messageError}</span>
-                    </div>
-                {/if}
-                {if $messageSuccess neq ""}
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                        <span>{$messageSuccess}</span>
-                    </div>  
-                {/if}
 
+        <div class="row">
+            <div class="col-lg-12">
+                <div><h2>Cliente</h2></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div>
+                    {if $messageError neq ""}
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            <span>{$messageError}</span>
+                        </div>
+                    {/if}
+                    {if $messageSuccess neq ""}
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            <span>{$messageSuccess}</span>
+                        </div>  
+                    {/if}
+
+                </div>
             </div>
         </div>
         <div class="row">

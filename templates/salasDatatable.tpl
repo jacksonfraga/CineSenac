@@ -2,13 +2,10 @@
 <script src="js/bootbox.min.js"></script>
 <script>
     $(document).ready(function() {
-        var tableClientes = $('#dataTables-example').dataTable({
-            "bAutoWidth": false,
+        var tableSalas = $('#dataTables-example').dataTable({
             "aoColumns": [
-                { "sWidth": "460px"},
                 null,
                 null,
-                { "sWidth": "36px", "bSortable": false},
                 { "sWidth": "36px", "bSortable": false},
                 { "sWidth": "36px", "bSortable": false}
             ]
@@ -41,7 +38,8 @@
                                     {
                                             $('#removeDialog').modal('hide');
                                             bootbox.dialog({
-                                                message: "Ocorreu um erro: " + textStatus
+                                                message: "Ocorreu um erro: " + textStatus,
+                                                buttons: { ok : { label: "OK" } }
                                             });
                                     }
                             });                            

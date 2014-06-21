@@ -7,7 +7,7 @@ include_once('mysql.php');
  *
  * @author Jackson
  */
-class clientePersistencia {
+class ClientePersistencia {
 
     private function fetchEntity($record) {
 
@@ -60,10 +60,8 @@ class clientePersistencia {
         
         if ($entity->getId() > 0) {
             print_r($entity);
-            echo 'UPDATE';
             $this->update($entity);
         } else {
-            echo 'INSERT';
             $this->insert($entity);
         }
         

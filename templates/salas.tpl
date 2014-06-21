@@ -3,8 +3,8 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Clientes</h1>
-            <p><a href="cliente.php" class="btn btn-primary">Novo Cliente</a></p>
+            <h1 class="page-header">Salas</h1>
+            <p><a href="sala.php" class="btn btn-primary">Nova Sala</a></p>
             <div>
                 {if $messageError neq ""}
                     <div class="alert alert-danger alert-dismissable">
@@ -31,7 +31,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Listagem de Clientes
+                    Listagem de Salas
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -40,23 +40,19 @@
                             <thead>
                                 <tr>
                                     <th>Nome</th>
-                                    <th class="hidden-xs hidden-sm">Telefone</th>
-                                    <th class="hidden-xs hidden-sm">Cidade</th>
-                                    <th class="column-icon"></th>
+                                    <th class="hidden-xs hidden-sm">Capacidade</th>
                                     <th class="column-icon"></th>
                                     <th class="column-icon"></th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                {foreach $clientes as $cliente}
+                                {foreach $salas as $sala}
                                     <tr>
-                                        <td>{$cliente->getNome()}</td>
-                                        <td class="hidden-xs hidden-sm">{$cliente->getTelefone()}</td>
-                                        <td class="hidden-xs hidden-sm">{$cliente->getCidade()}</td>
-                                        <td><a id="foto" href="{if $cliente->getFoto() eq ''}images/sem-imagem.png{else}{$cliente->getFoto()}{/if}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
-                                        <td><a href="cliente.php?id={$cliente->getId()}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                        <td><a class="delete-record" href="cliente.php?delete=1&id={$cliente->getId()}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                        <td>{$sala->getNome()}</td>
+                                        <td class="hidden-xs hidden-sm">{$sala->getCapacidade()}</td>                                        
+                                        <td><a href="sala.php?id={$sala->getId()}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                        <td><a class="delete-record" href="sala.php?delete=1&id={$sala->getId()}"><span class="glyphicon glyphicon-trash"></span></a></td>
                                     </tr>
                                 {/foreach} 
                             </tbody>
@@ -72,4 +68,4 @@
     </div>
     <!-- /#page-wrapper -->
 </div>
-    {include file="footerDatatables.tpl" subtemplate="clientesDatatable.tpl"}
+    {include file="footerDatatables.tpl"}
