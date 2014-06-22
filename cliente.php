@@ -1,10 +1,10 @@
 <?php
 
-include 'config.php';
-include 'autenticar.php';
+include_once 'config.php';
+include_once 'autenticar.php';
 
-include 'domain/Cliente.php';
-include 'domain/ClientePersistencia.php';
+include_once 'domain/class.Cliente.php';
+include_once 'domain/ClientePersistencia.php';
 
 $messageError = "";
 $messageSuccess = "";
@@ -47,10 +47,10 @@ if (isset($_REQUEST["delete"]) && $_REQUEST["delete"] === "1") {
         if (isset($_REQUEST["NomeMae"]))
             $cliente->setNomeMae($_REQUEST["NomeMae"]);
         if (isset($_REQUEST["Foto"]))
-            $cliente->setFoto($_REQUEST["Foto"]);
-
+            $cliente->setFoto($_REQUEST["Foto"]);                
+        
         if (isset($_FILES['userfile']) and ( $_FILES['userfile']['size'] > 0)) {
-            $uploaddir = 'images/fotos/';
+            $uploaddir = 'img/fotos/';
             $ext = end((explode(".", $_FILES['userfile']['name'])));
             date_default_timezone_set('America/Sao_Paulo');
             $dataHora = date('Ymdhis', time());
@@ -72,8 +72,6 @@ if (isset($_REQUEST["delete"]) && $_REQUEST["delete"] === "1") {
 
         try {
             $id = $clientePersistencia->post($cliente);
-
-            echo $id . 'sdasdasdasdas';
 
             $redirect = "clientes.php";
             header("location:$redirect");

@@ -1,6 +1,7 @@
 <?php
 
 include_once('mysql.php');
+include_once "class.sala.php";
 
 /**
  * Description of SalaPersistencia

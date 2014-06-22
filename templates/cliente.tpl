@@ -1,7 +1,7 @@
 {include file="header.tpl"}
 
 <div id="page-wrapper">    
-    <form role="form" action="cliente.php" method="POST">
+    <form role="form" action="cliente.php" method="POST" enctype="multipart/form-data">
 
         <div class="row">
             <div class="col-lg-12">
@@ -47,7 +47,7 @@
             <div class="col-sm-6"> 
                 <div class="form-group">
                     <label for="Telefone">Telefone</label>
-                    <input type="text" required=required class="form-control" id="Telefone" name="Telefone" value="{$cliente->getTelefone()}" />
+                    <input type="text" data-inputmask="'mask': '(99) 9999-99999'" required=required class="form-control" id="Telefone" name="Telefone" value="{$cliente->getTelefone()}" />
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
 
                 <div class="form-group">
                     <label for="Estado">Estado</label>
-                    <input type="text" required=required class="form-control" id="Estado" name="Estado" value="{$cliente->getEstado()}" />
+                    <input type="text" data-inputmask="'mask': 'aa'" required=required class="form-control" id="Estado" name="Estado" value="{$cliente->getEstado()}" />
                 </div>
             </div>
             <div class="col-sm-10"> 
@@ -83,7 +83,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="CPF">CPF</label>
-                    <input type="text" required=required class="form-control" id="CPF" name="CPF" value="{$cliente->getCPF()}" />
+                    <input type="text" data-inputmask="'mask': '999.999.999-99'" required=required class="form-control" id="CPF" name="CPF" value="{$cliente->getCPF()}" />
                 </div>
             </div>
             <div class="col-sm-6"> 
@@ -111,10 +111,15 @@
             </div>
         </div>
 
-
-        <div class="form-group">
-            <label for="Foto">Foto</label>
-            <input type="text" required=required class="form-control" id="Foto" name="Foto" value="{$cliente->getFoto()}" />
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="Foto">Foto</label>
+                    <input type="hidden" class="form-control" id="Foto" name="Foto" value="{$cliente->getFoto()}" />
+                    <img class="thumbnail" src="{$cliente->getFoto()}" alt="Foto do Cliente" />
+                    <input type="file" class="form-control" id="userfile" name="userfile" />
+                </div>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -124,4 +129,18 @@
 </div>
 <!-- /#page-wrapper -->
 </div>
-{include file="footer.tpl"}
+
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/inputmask/jquery.inputmask.js"></script>
+    <script src="js/sb-admin.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(":input").inputmask();
+        });
+    </script>
+</body>
+
+</html>

@@ -3,7 +3,7 @@
 include 'config.php';
 include 'autenticar.php';
 
-include 'domain/Sala.php';
+include 'domain/class.Sala.php';
 include 'domain/SalaPersistencia.php';
 
 $messageError = "";

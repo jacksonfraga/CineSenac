@@ -1,48 +1,51 @@
 <?php
 
-include_once "mysql.php";
-include_once "class.filme.php";
-
+include_once 'mysql.php';
+include_once 'filmePersistencia.php';
+include_once 'salaPersistencia.php';
+include_once 'class.sessao.php';
 
 /**
- * Description of filmePersistencia
+ * Description of SessaoPersistencia
  *
  * @author Jackson
  */
-class FilmePersistencia {
+class SessaoPersistencia {
 
     private $tableName;
 
     function __construct() {
-        $this->tableName = "filmes";
+        $this->tableName = "sessoes";
     }
 
     function fetchEntity($record) {
-        $filme = new Filme();
+        $sessao = new Sessao();
 
-        $filme->setId($record->Id);
-        $filme->setSinopse($record->Sinopse);
-        $filme->setTitulo($record->Titulo);
-        $filme->setImageUrl($record->ImageUrl);
-        $filme->setDuracao($record->Duracao);
-        $filme->setLancamento($record->Lancamento);
-        $filme->setTermino($record->Termino);
-        $filme->setAtores($record->Atores);
-        $filme->setGenero($record->Genero);
+        $sessao->setId($record->Id);    
+        $sessao->setInicio($record->Inicio);
+        $sessao->setFim($record->Fim);
+        $sessao->setData($record->Data);
+        $sessao->setFilmeId($record->FilmeId);
+        $sessao->setSalaId($record->SalaId);
+        $sessao->setValor($record->Valor); 
+        
+        $filmePersis = new FilmePersistencia();        
+        $sessao->setFilme($filmePersis->getById($sessao->getFilmeId()));
+        
+        $salaPersis = new SalaPersistencia();
+        $sessao->setSala($salaPersis->getById($sessao->getSalaId()));
 
-        return $filme;
+        return $sessao;
     }
 
     private function getDataValues($entity) {
         return array(
-            'Sinopse' => $entity->getSinopse(),
-            'Titulo' => $entity->getTitulo(),
-            'ImageUrl' => $entity->getImageUrl(),
-            'Duracao' => $entity->getDuracao(),
-            'Lancamento' => $entity->getLancamento(),
-            'Termino' => $entity->getTermino(),
-            'Atores' => $entity->getAtores(),
-            'Genero' => $entity->getGenero());
+            'Inicio' => $entity->getInicio(),
+            'Fim' => $entity->getFim(),
+            'Data' => $entity->getData(),
+            'FilmeId' => $entity->getFilmeId(),
+            'SalaId' => $entity->getSalaId(),
+            'Valor' => $entity->getValor());
     }
 
     function getAll() {

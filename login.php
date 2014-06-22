@@ -1,5 +1,5 @@
 <?php
-	include 'domain/Usuario.php';
+	include 'domain/class.Usuario.php';
 	include 'domain/UsuarioPersistencia.php';
 	include 'config.php';
 

@@ -1,6 +1,7 @@
 <?php
 
-include_once('mysql.php');
+include_once 'mysql.php';
+include_once 'class.cliente.php';
 
 /**
  * Description of clientePersistencia
@@ -59,7 +60,6 @@ class ClientePersistencia {
     function post($entity) {
         
         if ($entity->getId() > 0) {
-            print_r($entity);
             $this->update($entity);
         } else {
             $this->insert($entity);

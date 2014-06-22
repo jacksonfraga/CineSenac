@@ -143,7 +143,6 @@ class HelperMySQL {
             $query .= " AND `{$key}` = '{$value}'";
         }        
 
-        echo $query;
         return $this->sql_query($query);
         
     }
@@ -175,11 +174,8 @@ class HelperMySQL {
              $separador = ", ";
         }
 
-        
         $query .= ")";
         
-
-        echo $query;
         return $this->sql_query($query);
     }
     

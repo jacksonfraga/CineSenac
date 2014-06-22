@@ -1,5 +1,6 @@
 <?php
-include("mysql.php");
+include_once "mysql.php";
+
 
 class UsuarioPersistencia {
 	

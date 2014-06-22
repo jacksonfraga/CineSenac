@@ -1,6 +1,6 @@
 <?php
-	include 'config.php';
-	include 'autenticar.php';
+	include_once 'config.php';
+	include_once 'autenticar.php';
 	
 	require('libs/Smarty.class.php');
 	$smarty = new Smarty;

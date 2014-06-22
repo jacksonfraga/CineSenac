@@ -1,9 +1,9 @@
 <?php
-	include 'config.php';
-	include 'autenticar.php';
+	include_once 'config.php';
+	include_once 'autenticar.php';
 	
-	include 'domain/Usuario.php';
-	include 'domain/UsuarioPersistencia.php';
+	include_once 'domain/class.Usuario.php';
+	include_once 'domain/UsuarioPersistencia.php';
 	
 	
 	require('libs/Smarty.class.php');

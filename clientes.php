@@ -1,10 +1,10 @@
 <?php
 
-include 'config.php';
-include 'autenticar.php';
+include_once 'config.php';
+include_once 'autenticar.php';
 
-include 'domain/Cliente.php';
-include 'domain/ClientePersistencia.php';
+include_once 'domain/class.Cliente.php';
+include_once 'domain/ClientePersistencia.php';
 
 $clientePersistencia = new ClientePersistencia();
 

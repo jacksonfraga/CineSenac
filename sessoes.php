@@ -1,17 +1,17 @@
 <?php
 
-include_once 'config.php';
-include_once 'autenticar.php';
+include 'config.php';
+include 'autenticar.php';
 
-include_once 'domain/class.Filme.php';
-include_once 'domain/FilmePersistencia.php';
+include 'domain/class.Sessao.php';
+include 'domain/SessaoPersistencia.php';
 
-$filmePersistencia = new FilmePersistencia();
+$sessaoPersistencia = new FilmePersistencia();
 
 $messageError = "";
 $messageSuccess = "";
 
-$filmes = $filmePersistencia->getAll();
+$sessoes = $sessaoPersistencia->getAll();
 
 
 require('libs/Smarty.class.php');
@@ -24,8 +24,6 @@ $smarty->assign('nomeEmpresa', $nomeEmpresa);
 $smarty->assign('enderecoEmpresa', $enderecoEmpresa);
 $smarty->assign('messageError', $messageError);
 $smarty->assign('messageSuccess', $messageSuccess);
-$smarty->assign('filmes', $filmes);
+$smarty->assign('sessoes', $sessoes);
 
-$smarty->display('filmes.tpl');
-
-?>
+$smarty->display('sessoes.tpl');
