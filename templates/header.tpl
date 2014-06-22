@@ -155,13 +155,16 @@
                                     <a href="clientes.php"><i class="fa fa-group fa-fw"></i>Clientes</a>
                                 </li>
                                 <li>
-                                    <a href="usuarios.php"><i class="fa fa-user fa-fw"></i>Usuários</a>
-                                </li>
-                                <li>
                                     <a href="salas.php"><i class="fa fa-picture-o fa-fw"></i>Salas</a>
                                 </li>
                                 <li>
                                     <a href="filmes.php"><i class="fa fa-film fa-fw"></i>Filmes</a>
+                                </li>
+                                <li>
+                                    <a href="sessoes.php"><i class="fa fa-user fa-fw"></i>Sessões</a>
+                                </li>
+                                <li>
+                                    <a href="usuarios.php"><i class="fa fa-user fa-fw"></i>Usuários</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

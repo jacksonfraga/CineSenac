@@ -6,12 +6,18 @@ include 'autenticar.php';
 include 'domain/class.Sessao.php';
 include 'domain/SessaoPersistencia.php';
 
-$sessaoPersistencia = new FilmePersistencia();
+$sessaoPersistencia = new SessaoPersistencia();
 
 $messageError = "";
 $messageSuccess = "";
 
-$sessoes = $sessaoPersistencia->getAll();
+$sessoes = array();
+
+try {
+    $sessoes = $sessaoPersistencia->getAll();
+} catch (Exception $exc) {
+    $messageError = $exc->getMessage();
+}
 
 
 require('libs/Smarty.class.php');
