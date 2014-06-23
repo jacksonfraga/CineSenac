@@ -5,11 +5,20 @@ include_once 'autenticar.php';
 
 include_once 'domain/class.Sessao.php';
 include_once 'domain/SessaoPersistencia.php';
+include_once 'domain/class.Filme.php';
+include_once 'domain/FilmePersistencia.php';
+include_once 'domain/class.Sala.php';
+include_once 'domain/SalaPersistencia.php';
 
 $messageError = "";
 $messageSuccess = "";
 
 $sessaoPersistencia = new SessaoPersistencia();
+$filmePersistencia = new FilmePersistencia();
+$salaPersistencia = new SalaPersistencia();
+
+$filmes = $filmePersistencia->getAll();
+$salas = $salaPersistencia->getAll();
 
 if (isset($_REQUEST["delete"]) && $_REQUEST["delete"] === "1") {
 
@@ -63,6 +72,8 @@ if (isset($_REQUEST["delete"]) && $_REQUEST["delete"] === "1") {
     $smarty->assign('messageError', $messageError);
     $smarty->assign('messageSuccess', $messageSuccess);
     $smarty->assign('sessao', $sessao);
+    $smarty->assign('salas', $salas);
+    $smarty->assign('filmes', $filmes);
 
     $smarty->display('sessao.tpl');
 }

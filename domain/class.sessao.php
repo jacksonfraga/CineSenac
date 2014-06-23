@@ -9,9 +9,9 @@ class Sessao {
     private $FilmeId;
     private $SalaId;
     private $Valor;
-    
     private $Filme;
     private $Sala;
+    private $TotalVendido;
 
     public function getId() {
         return $this->Id;
@@ -85,5 +85,24 @@ class Sessao {
         $this->Sala = $Sala;
     }
 
+    public function getCapacidade() {
+        
+        if ($this->TotalVendido <= 0)
+        {
+            $this->TotalVendido = rand (1, 100);
+        }
+        
+        $totalVendido = $this->TotalVendido;
+        
+        $capacidadeSala = $this->getSala()->getCapacidade();
+        
+        return round(100*$totalVendido/$capacidadeSala);
+    }
+    
+    public function getDisplay()
+    {        
+        $date = date_create($this->getData() . " " . $this->getInicio());
+        return $this->getFilme()->getTitulo() . " " . date_format($date, '(d/m/Y H:i)');
+    }
 
 }

@@ -6,6 +6,7 @@
             "aoColumns": [
                 null,
                 null,
+                null,
                 { "sWidth": "36px", "bSortable": false},
                 { "sWidth": "36px", "bSortable": false}
             ]

@@ -58,17 +58,27 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="Email">Filme</label>
-                    <input type="text" class="form-control" id="FilmeId" name="FilmeId" value="{$sessao->getFilmeId()}" />
+                    <select class="form-control" id="FilmeId" name="FilmeId" >
+                        <option value="">(Selecione)</option>
+                        {foreach $filmes as $filme}
+                            <option value="{$filme->getId()}" {if ($filme->getId() eq $sessao->getFilmeId())}selected{/if}>{$filme->getTitulo()}</option>
+                        {/foreach}
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6"> 
                 <div class="form-group">
                     <label for="Telefone">Sala</label>
-                    <input type="text" required=required class="form-control" id="SalaId" name="SalaId" value="{$sessao->getSalaId()}" />
+                    <select class="form-control" id="SalaId" name="SalaId">
+                        <option value="">(Selecione)</option>
+                        {foreach $salas as $sala}                            
+                            <option value="{$sala->getId()}" {if ($sala->getId() eq $sessao->getSalaId())}selected{/if}>{$sala->getNome()}</option>
+                        {/foreach}
+                    </select>
                 </div>
             </div>
         </div>
-                
+
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">

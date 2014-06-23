@@ -41,6 +41,7 @@
                                 <tr>
                                     <th>Filme</th>
                                     <th>Início</th>
+                                    <th class="hidden-sm">Capacidade</th>
                                     <th class="column-icon"></th>
                                     <th class="column-icon"></th>
                                 </tr>
@@ -51,6 +52,11 @@
                                     <tr>
                                         <td>{$sessao->getFilme()->getTitulo()}</td>
                                         <td>{$sessao->getInicio()}</td>
+                                        <td class="hidden-sm">
+                                            <div class="progress">
+                                                <div class="progress-bar {if ($sessao->getCapacidade() > 90)}progress-bar-warning{/if}" role="progressbar" aria-valuenow="{$sessao->getCapacidade()}" aria-valuemin="0" aria-valuemax="100" style="width: {$sessao->getCapacidade()}%;">{$sessao->getCapacidade()}%</div>
+                                            </div>
+                                        </td>
                                         <td><a href="sessao.php?id={$sessao->getId()}"><span class="glyphicon glyphicon-edit"></span></a></td>
                                         <td><a class="delete-record" href="sessao.php?delete=1&id={$sessao->getId()}"><span class="glyphicon glyphicon-trash"></span></a></td>
                                     </tr>
@@ -66,6 +72,20 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+    <div class="row hidden-sm">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Capacidade (Legenda)</h3>
+                </div>
+                <div class="panel-body">
+                    <span class="label label-primary">Sessão Disponível</span>
+                    <span class="label label-warning">Últimos Ingressos</span>
+                    <span class="label label-danger">Sessão Lotada</span
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- /#page-wrapper -->
 </div>
-    {include file="footerDatatables.tpl" subtemplate="sessoesDatatable.tpl"}
+{include file="footerDatatables.tpl" subtemplate="sessoesDatatable.tpl"}
