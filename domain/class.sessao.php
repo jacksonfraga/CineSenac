@@ -85,22 +85,40 @@ class Sessao {
         $this->Sala = $Sala;
     }
 
+    public function getTotalVendido() {
+        return $this->TotalVendido;
+    }
+
+    public function setTotalVendido($TotalVendido) {
+        $this->TotalVendido = $TotalVendido;
+    }
+
     public function getCapacidade() {
-        
-        if ($this->TotalVendido <= 0)
-        {
-            $this->TotalVendido = rand (1, 100);
-        }
-        
-        $totalVendido = $this->TotalVendido;
-        
+
+
+        $totalVendido = $this->getTotalVendido();
+
         $capacidadeSala = $this->getSala()->getCapacidade();
         
-        return round(100*$totalVendido/$capacidadeSala);
+        $result = round(100 * $totalVendido / $capacidadeSala);
+        
+        if (($result == 100) and ($totalVendido < $capacidadeSala))
+        {
+            $result = 99;
+        }
+        
+        return $result;
     }
     
-    public function getDisplay()
-    {        
+    public function isLotado()
+    {
+        $totalVendido = $this->getTotalVendido();
+        $capacidadeSala = $this->getSala()->getCapacidade();
+        
+        return $totalVendido >= $capacidadeSala;
+    }
+
+    public function getDisplay() {
         $date = date_create($this->getData() . " " . $this->getInicio());
         return $this->getFilme()->getTitulo() . " " . date_format($date, '(d/m/Y H:i)');
     }

@@ -29,6 +29,8 @@ class SessaoPersistencia {
         $sessao->setSalaId($record->SalaId);
         $sessao->setValor($record->Valor); 
         
+        $sessao->setTotalVendido($this->getTotalVendido($record->Id));        
+        
         $filmePersis = new FilmePersistencia();        
         $sessao->setFilme($filmePersis->getById($sessao->getFilmeId()));
         
@@ -103,6 +105,18 @@ class SessaoPersistencia {
         $oMySQL = new HelperMySQL();
         $where = array('Id' => $id);
         $oMySQL->delete($this->tableName, $where);
+    }
+    
+    function getTotalVendido($sessaoId)
+    {
+        $oMySQL = new HelperMySQL();
+        
+
+        $rs = $oMySQL->sql_query("SELECT COUNT(1) FROM ingressos WHERE SessaoId = $sessaoId ");
+        
+        $r = mysql_fetch_row($rs);
+        mysql_free_result($rs);        
+        return $r[0];
     }
 
 }

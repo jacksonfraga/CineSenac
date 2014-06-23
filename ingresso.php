@@ -31,14 +31,16 @@ if (isset($_REQUEST["delete"]) && $_REQUEST["delete"] === "1") {
         if (isset($_REQUEST["id"])) {
             $ingresso = $ingressoPersistencia->GetById($_REQUEST["id"]);
         }
-    } else {
+    }  else {
         if (isset($_REQUEST["Id"]))
             $ingresso->setId($_REQUEST["Id"]);
-        if (isset($_REQUEST["ClienteId"]))
-            $ingresso->setClienteId($_REQUEST["ClienteId"]);
-        if (isset($_REQUEST["SessaoId"]))
-            $ingresso->setSessaoId($_REQUEST["SessaoId"]);        
     }
+    
+    if (isset($_REQUEST["ClienteId"]))
+        $ingresso->setClienteId($_REQUEST["ClienteId"]);
+    if (isset($_REQUEST["SessaoId"]))
+        $ingresso->setSessaoId($_REQUEST["SessaoId"]);        
+    
 
     if (($_SERVER['REQUEST_METHOD'] == "POST") and ( $messageError == "")) {
 

@@ -21,14 +21,14 @@ class IngressoPersistencia {
     function fetchEntity($record) {
         $ingresso = new Ingresso();
 
-        $ingresso->setId($record->Id);    
+        $ingresso->setId($record->Id);
         $ingresso->setSessaoId($record->SessaoId);
         $ingresso->setClienteId($record->ClienteId);
         $ingresso->setDataHora($record->DataHora);
-        
+
         $clientePersis = new ClientePersistencia();
         $ingresso->setCliente($clientePersis->getById($ingresso->getClienteId()));
-        
+
         $sessaoPersis = new SessaoPersistencia();
         $ingresso->setSessao($sessaoPersis->getById($ingresso->getSessaoId()));
 
@@ -77,15 +77,22 @@ class IngressoPersistencia {
         }
     }
 
+
     private function insert($entity) {
         $oMySQL = new HelperMySQL();
         
+        $sessaoPersis = new SessaoPersistencia();
+        $sessao = $sessaoPersis->getById($entity->getSessaoId());
+        
+        if ($sessao->isLotado())
+        {
+            throw new Exception("Não é possível efetuar a venda do ingresso, capacidade excedida desta sessão.");
+        }
+
         $dt = new DateTime();
-        
-        
-        $dataHora = array('DataHora' => $dt->format('Y-m-d H:i:s'));        
-        $data = array_merge($this->getDataValues($entity), $dataHora );
-        
+        $dataHora = array('DataHora' => $dt->format('Y-m-d H:i:s'));
+        $data = array_merge($this->getDataValues($entity), $dataHora);
+
         $oMySQL->insert($this->tableName, $data);
     }
 
