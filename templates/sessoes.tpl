@@ -55,7 +55,7 @@
                                         <td>{$sessao->getInicio()}</td>
                                         <td class="hidden-sm">
                                             <div class="progress">
-                                                <div class="progress-bar {if ($sessao->getCapacidade() >= 100)}progress-bar-danger{elseif ($sessao->getCapacidade() > 90)}{/if}" role="progressbar" aria-valuenow="{$sessao->getCapacidade()}" aria-valuemin="0" aria-valuemax="100" style="width: {$sessao->getCapacidade()}%;">{$sessao->getCapacidade()}%</div>
+                                                <div class="progress-bar {if ($sessao->getCapacidade() >= 100)}progress-bar-danger{elseif ($sessao->getCapacidade() > 90)}progress-bar-warning{/if}" role="progressbar" aria-valuenow="{$sessao->getCapacidade()}" aria-valuemin="0" aria-valuemax="100" style="width: {$sessao->getCapacidade()}%;">{$sessao->getCapacidade()}%</div>
                                             </div>
                                         </td>
                                         <td><a href="ingresso.php?SessaoId={$sessao->getId()}" class="btn btn-primary">Comprar</a></td>
