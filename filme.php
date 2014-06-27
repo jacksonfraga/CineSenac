@@ -12,9 +12,18 @@ $messageSuccess = "";
 $filmePersistencia = new FilmePersistencia();
 
 if (isset($_REQUEST["delete"]) && $_REQUEST["delete"] === "1") {
+   
+    
+        try {
+            $filmePersistencia->delete($_REQUEST["id"]);
+            $redirect = "filmes.php";
+            header("location:$redirect");
+        } catch (Exception $e) {           
+            
+            $messageError = $e->getMessage();
+        }
+} 
 
-    $filmePersistencia->delete($_REQUEST["id"]);
-} else {
     $filme = new Filme();
 
 
@@ -74,4 +83,3 @@ if (isset($_REQUEST["Id"]))
     $smarty->assign('filme', $filme);
 
     $smarty->display('filme.tpl');
-}

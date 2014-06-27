@@ -89,12 +89,62 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-primary">Salvar</button>            
+            </div>
+            <div class="col-sm-6 text-right">
+                {if $filme->getId() > 0}
+                    <a class="btn btn-danger" id="btn-delete" href="filme.php?delete=1&id={$filme->getId()}"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                {/if}            
+            </div>
+        </div>                
 
-        <button type="submit" class="btn btn-primary">Salvar</button>
 
     </form>
+    
     <!-- /.col-lg-12 -->
 </div>
-<!-- /#page-wrapper -->
-</div>
-{include file="footer.tpl"}
+                
+
+    <!-- Core Scripts - Include with every page -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <script src="js/sb-admin.js"></script>
+    <script src="js/bootbox.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){  
+            $("#btn-delete").click(function(e){
+                var link = this;          
+                e.preventDefault();
+                
+                bootbox.dialog({
+                message: "Deseja remover este registro?",
+                title: "Confirmação",
+                buttons: {
+                    remove: {
+                        label: "Remover",
+                        className: "btn-danger",
+                        callback: function() {
+                            window.location = link.href;
+                        }
+                    },
+                    cancel: {
+                        label: "Cancelar",
+                        className: "btn-default"                        
+                    }
+                }
+            });
+            });
+        });
+    </script>
+
+
+<!-- Page-Level Demo Scripts - Blank - Use for reference -->
+
+</body>
+
+</html>

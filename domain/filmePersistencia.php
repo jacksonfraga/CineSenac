@@ -97,9 +97,22 @@ class FilmePersistencia {
     }
 
     function delete($id) {
-        $oMySQL = new HelperMySQL();
-        $where = array('Id' => $id);
-        $oMySQL->delete($this->tableName, $where);
+        //if ( 'CONSTRAINT''sessoes_ibfk_1'')
+        
+        
+        try {
+            $oMySQL = new HelperMySQL();
+            $where = array('Id' => $id);
+            $oMySQL->delete($this->tableName, $where);
+        } catch (Exception $e) {    
+            if (strpos($e->getMessage(), 'CONSTRAINT') and strpos($e->getMessage(), 'sessoes_ibfk_1'))
+            {
+                echo "ops";
+                throw new Exception ("Não é possível remover o filme pois há uma sessão cadastrada.");                
+            } else {                
+                throw $e;
+            }
+        }
     }
 
 }

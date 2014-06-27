@@ -109,5 +109,15 @@ class IngressoPersistencia {
         $where = array('Id' => $id);
         $oMySQL->delete($this->tableName, $where);
     }
+    
+    function getAllByFilme($filmeId)
+    {
+        
+    }
+    
+    function getAllBySessao($sessaoId)
+    {
+        
+    }
 
 }

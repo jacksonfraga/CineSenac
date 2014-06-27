@@ -56,7 +56,7 @@
                                         <td class="hidden-xs hidden-sm">{$cliente->getCidade()}</td>
                                         <td><a id="foto" href="{if $cliente->getFoto() eq ''}images/sem-imagem.png{else}{$cliente->getFoto()}{/if}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                                         <td><a href="cliente.php?id={$cliente->getId()}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                        <td><a class="delete-record" href="cliente.php?delete=1&id={$cliente->getId()}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                        <td><a class="delete-record" href="cliente.php?delete=1&id={$cliente->getId()}"></a></td>
                                     </tr>
                                 {/foreach} 
                             </tbody>
